@@ -67,15 +67,6 @@ public class StudentController {
 		List<Student> list = service.findAll();
 		StudentDTO dto = new StudentDTO();
 		
-		Object st = list.get(3).getMobileNumber();
-		
-		for (Student student : list) {
-			System.out.println(student.getStudentName()+" ####################### "+student.getGender()+" ######### "+ student.getAge()
-			+"##############"+student.getMobileNumber());
-		}
-		
-		System.out.println(list.get(0).getStudentName());
-		
 		try {
 			if (list.size() == 0) {
 				status = HttpStatus.NOT_FOUND;
