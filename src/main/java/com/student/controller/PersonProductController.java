@@ -64,7 +64,7 @@ public class PersonProductController {
 		String message = null;
 		try {
 			System.out.println("============================Heoooo>"+person.isEmpty());
-			if (person.isEmpty()) {
+			if (person.size() == 0) {
 				message = "No Data is Present in Database";
 				response.setMessage(message);
 				response.setData(null);
@@ -88,37 +88,37 @@ public class PersonProductController {
 		
 	}
 	
-	@Operation(summary = "fetchPersonAndProductDetaisByPersonId")
-	@RequestMapping(path = "/fetch-person-product/{person_id}",method = RequestMethod.GET)
-	public ResponseEntity<PersonProductResponse> fetchPersonProductDetailsByPersonId(@PathVariable(name = "person_id") int id)
-	{
-		Optional<Person> person = null;
-		HttpStatus status = null;
-		PersonProductResponse response = new PersonProductResponse();
-		String message = null;
-		try {
-			person = personRepository.findById(id);
-			System.out.println("============================>"+person.isEmpty());
-			if (person.isEmpty()) {
-				message = "No Detais Found with this person ID "+id;
-				response.setMessage(message);
-				status = HttpStatus.NOT_FOUND;
-			} else {
-				response.setData(person);
-				message = "Data Found";
-				response.setMessage(message);
-				status = HttpStatus.OK;
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e);
-			response.setData(null);
-			message = "Data not Found";
-			response.setMessage(message);
-			status=HttpStatus.BAD_REQUEST;
-			
-		}
-		return new ResponseEntity<PersonProductResponse>(response,status);
-		
-	}
+//	@Operation(summary = "fetchPersonAndProductDetaisByPersonId")
+//	@RequestMapping(path = "/fetch-person-product/{person_id}",method = RequestMethod.GET)
+//	public ResponseEntity<PersonProductResponse> fetchPersonProductDetailsByPersonId(@PathVariable(name = "person_id") int id)
+//	{
+//		Optional<Person> person = null;
+//		HttpStatus status = null;
+//		PersonProductResponse response = new PersonProductResponse();
+//		String message = null;
+//		try {
+//			person = personRepository.findById(id);
+//			System.out.println("============================>"+person.isEmpty());
+//			if (person.isEmpty()) {
+//				message = "No Detais Found with this person ID "+id;
+//				response.setMessage(message);
+//				status = HttpStatus.NOT_FOUND;
+//			} else {
+//				response.setData(person);
+//				message = "Data Found";
+//				response.setMessage(message);
+//				status = HttpStatus.OK;
+//			}
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			System.out.println(e);
+//			response.setData(null);
+//			message = "Data not Found";
+//			response.setMessage(message);
+//			status=HttpStatus.BAD_REQUEST;
+//			
+//		}
+//		return new ResponseEntity<PersonProductResponse>(response,status);
+//		
+//	}
 }
