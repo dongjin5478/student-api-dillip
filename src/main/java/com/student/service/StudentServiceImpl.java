@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.student.entity.Student;
+import com.student.exception.StudentException;
 import com.student.repository.StudentRepository;
 import com.student.request.StudentRequest;
 import com.student.response.StudentResponse;
@@ -48,19 +49,17 @@ public class StudentServiceImpl implements StudentService {
 		StudentResponse response = new StudentResponse();
 		List<Student> list = repository.findByRollNo(rollNo);
 		Student re_student = new Student();
-		if(list.size()==0)
-		{
-			response.setMessage("No Student is Present in DB with this Roll Number");
-		}
-		else {
-			repository.deleteById(rollNo);
+		if (list.get(0).getRollNo()==rollNo) {
 			re_student.setStudentName(student.getName());
 			re_student.setAge(student.getAge());
 			re_student.setGender(student.getGender());
 			re_student.setMobileNumber(student.getMobileNumber());
-			re_student.setRollNo(rollNo);
 			repository.save(re_student);
 			response.setMessage("Student Record Updated Successfully with Roll Number => "+rollNo);
+		}
+		else
+		{
+			response.setMessage("No Student is Present in DB with this Roll Number");
 		}
 		return response;
 	}
@@ -77,15 +76,23 @@ public class StudentServiceImpl implements StudentService {
 		// TODO Auto-generated method stub
 		
 		Student re_student = new Student();
-		
-		re_student.setStudentName(student.getName());
-		re_student.setAge(student.getAge());
-		re_student.setGender(student.getGender());
-		re_student.setMobileNumber(student.getMobileNumber());
-		System.out.println(re_student);
-		
-		return repository.save(re_student);
-		
+		try {
+			if(student.getName().isEmpty() || student.getName().isBlank() || student.getName().length()==0)
+			{
+				throw new StudentException("601","Student Name Missing!!","Student Name is Blank");
+			}
+			re_student.setStudentName(student.getName());
+			re_student.setAge(student.getAge());
+			re_student.setGender(student.getGender());
+			re_student.setMobileNumber(student.getMobileNumber());
+			System.out.println(re_student);
+			
+			return repository.save(re_student);
+		} catch (IllegalArgumentException e) {
+			throw new StudentException("602","Student Entity is Null","Please Provide correct data for Student Entity"+e.getMessage());
+		}catch (Exception e) {
+			throw new StudentException("603","Something Went Wrong","Exception happen in Business Layer"+e.getMessage());
+		}
 	}
 	
 	

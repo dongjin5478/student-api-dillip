@@ -23,7 +23,8 @@ public class Student {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue         
 	@Column(name = "roll_no")
 	private int rollNo;
 	

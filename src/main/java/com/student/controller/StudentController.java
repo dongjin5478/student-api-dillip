@@ -15,6 +15,7 @@ import org.springframework.web.client.ResourceAccessException;
 
 import com.student.dto.StudentDTO;
 import com.student.entity.Student;
+import com.student.exception.StudentException;
 import com.student.request.StudentRequest;
 import com.student.response.StudentResponse;
 import com.student.service.StudentService;
@@ -31,21 +32,20 @@ public class StudentController {
 	
 	@Operation(summary = "saveStudentDetails")
 	@RequestMapping(path = "/student",consumes = "application/json",produces = "application/json",method = RequestMethod.POST)
-	public ResponseEntity<StudentResponse> addStudent(@RequestBody StudentRequest studentRequest)
+	public ResponseEntity<?> addStudent(@RequestBody StudentRequest studentRequest)
 	{	
 		
 		final String message = "Student Record Added Successfully !!";
 		HttpStatus status = HttpStatus.CREATED;
 		StudentResponse response = new StudentResponse();
 		try {
-			
 			response.setMessage(message);
-			
 			service.addStudent(studentRequest);
-			
 			return new ResponseEntity<StudentResponse>(response,status);
 			
-			
+		}catch (StudentException e) {
+			StudentException se = new StudentException(e.getErrorCode(),e.getErrorMessage(), e.getDescription());
+			return new ResponseEntity<StudentException>(se,HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e);
