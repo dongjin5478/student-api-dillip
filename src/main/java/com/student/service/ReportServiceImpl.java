@@ -1,18 +1,17 @@
 package com.student.service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 import com.student.request.WeightSlipRequest;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -25,16 +24,17 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @Service
 public class ReportServiceImpl {
 	public ResponseEntity<byte[]> exportReport(WeightSlipRequest weightSlipRequest)
-			throws FileNotFoundException, JRException {
+			throws JRException, IOException {
 		List<WeightSlipRequest> list = new ArrayList<>();
 		list.add(new WeightSlipRequest());
 
 		String netWeight = String.valueOf(Integer.parseInt(weightSlipRequest.getGrossWeight())
 				- Integer.parseInt(weightSlipRequest.getTareWeight()));
 		
-
-		File file = ResourceUtils.getFile("classpath:WeightSlip.jrxml");
-		JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+		ClassPathResource classPathResource = new ClassPathResource("WeightSlip.jrxml");
+//		File file = ResourceUtils.getFile("classpath:WeightSlip.jrxml");
+//		JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+		JasperReport jasperReport = JasperCompileManager.compileReport(classPathResource.getInputStream());
 		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(list);
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("address", weightSlipRequest.getAddress());
