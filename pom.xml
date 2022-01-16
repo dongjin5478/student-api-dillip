@@ -42,17 +42,13 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.5.2</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
 		<dependency>
-			<groupId>net.sf.jasperreports</groupId>
+    			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
-			<version>6.1.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.olap4j</groupId>
-					<artifactId>olap4j</artifactId>
-				</exclusion>
-			</exclusions>
+    			<version>6.18.0</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
