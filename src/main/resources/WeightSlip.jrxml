@@ -142,7 +142,7 @@
 				<textFieldExpression><![CDATA[$P{vehicleNumber}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="119" width="760" height="1" uuid="ed005e35-fb93-455c-af0a-275bb9719aab">
+				<reportElement x="0" y="119" width="757" height="1" uuid="ed005e35-fb93-455c-af0a-275bb9719aab">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -322,7 +322,7 @@
 				<textFieldExpression><![CDATA[$P{tareWeightTime}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="245" width="760" height="1" uuid="e9d4d218-b822-4e17-8cfa-057b5efee71d">
+				<reportElement x="0" y="245" width="757" height="1" uuid="e9d4d218-b822-4e17-8cfa-057b5efee71d">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -341,7 +341,7 @@
 				<text><![CDATA[OPERATOR ' S SIGNATURE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="309" width="760" height="1" uuid="17bd928c-baf0-4c8c-9e65-01909b514bdf">
+				<reportElement x="0" y="309" width="757" height="1" uuid="17bd928c-baf0-4c8c-9e65-01909b514bdf">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
