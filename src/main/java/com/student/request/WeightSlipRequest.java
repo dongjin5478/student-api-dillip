@@ -1,19 +1,21 @@
 package com.student.request;
 
+import java.time.LocalDateTime;
+
 public class WeightSlipRequest {
 	private String address;
 	private String vehicleNumber;
 	private String grossWeight;
 	private String tareWeight;
-	private String grossWeightDate;
-	private String tareWeightDate;
+	private LocalDateTime grossWeightDate;
+	private LocalDateTime tareWeightDate;
 	private String grossWeightTime;
 	private String tareWeightTime;
 	private String message;
 	
 	public WeightSlipRequest() {
 		super();
-		this.message = "Thank You ! Visit Again";
+		this.message = "Thank You  !  Visit Again";
 	}
 	public String getAddress() {
 		return address;
@@ -39,16 +41,16 @@ public class WeightSlipRequest {
 	public void setTareWeight(String tareWeight) {
 		this.tareWeight = tareWeight;
 	}
-	public String getGrossWeightDate() {
+	public LocalDateTime getGrossWeightDate() {
 		return grossWeightDate;
 	}
-	public void setGrossWeightDate(String grossWeightDate) {
+	public void setGrossWeightDate(LocalDateTime grossWeightDate) {
 		this.grossWeightDate = grossWeightDate;
 	}
-	public String getTareWeightDate() {
+	public LocalDateTime getTareWeightDate() {
 		return tareWeightDate;
 	}
-	public void setTareWeightDate(String tareWeightDate) {
+	public void setTareWeightDate(LocalDateTime tareWeightDate) {
 		this.tareWeightDate = tareWeightDate;
 	}
 	public String getGrossWeightTime() {
