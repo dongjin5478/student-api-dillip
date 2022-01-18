@@ -1,6 +1,8 @@
 package com.student.service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,15 +27,14 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 public class ReportServiceImpl {
 	public ResponseEntity<byte[]> exportReport(WeightSlipRequest weightSlipRequest)
 			throws JRException, IOException {
+		
 		List<WeightSlipRequest> list = new ArrayList<>();
 		list.add(new WeightSlipRequest());
-
+		
 		String netWeight = String.valueOf(Integer.parseInt(weightSlipRequest.getGrossWeight())
 				- Integer.parseInt(weightSlipRequest.getTareWeight()));
 		
 		ClassPathResource classPathResource = new ClassPathResource("WeightSlip.jrxml");
-//		File file = ResourceUtils.getFile("classpath:WeightSlip.jrxml");
-//		JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
 		JasperReport jasperReport = JasperCompileManager.compileReport(classPathResource.getInputStream());
 		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(list);
 		Map<String, Object> parameters = new HashMap<>();
@@ -42,10 +43,10 @@ public class ReportServiceImpl {
 		parameters.put("grossWeight", weightSlipRequest.getGrossWeight());
 		parameters.put("tareWeight", weightSlipRequest.getTareWeight());
 		parameters.put("netWeight", netWeight);
-		parameters.put("grossWeightDate", weightSlipRequest.getGrossWeightDate());
-		parameters.put("tareWeightDate", weightSlipRequest.getTareWeightDate());
-		parameters.put("grossWeightTime", weightSlipRequest.getGrossWeightTime());
-		parameters.put("tareWeightTime", weightSlipRequest.getTareWeightTime());
+		parameters.put("grossWeightDate", formattedDate(weightSlipRequest.getGrossWeightDate()));
+		parameters.put("tareWeightDate", formattedDate(weightSlipRequest.getTareWeightDate()));
+		parameters.put("grossWeightTime", formattedTime(weightSlipRequest.getGrossWeightDate()));
+		parameters.put("tareWeightTime", formattedTime(weightSlipRequest.getTareWeightDate()));
 		
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 		byte[] data = JasperExportManager.exportReportToPdf(jasperPrint);
@@ -53,8 +54,16 @@ public class ReportServiceImpl {
 		HttpHeaders headers = new HttpHeaders();
 		Date date = new Date();
 		headers.set(HttpHeaders.CONTENT_DISPOSITION,"attachment;filename=Weight Slip_" + String.valueOf(date)+".pdf");
-		
-
 		return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(data);
+	}
+	public String formattedDate(LocalDateTime date)
+	{
+		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return date.format(myFormatObj);
+	}
+	public String formattedTime(LocalDateTime date)
+	{
+		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("hh : mm : ss  a");
+		return date.format(myFormatObj).toUpperCase();
 	}
 }
